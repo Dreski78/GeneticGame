@@ -39,6 +39,8 @@ class Player(pygame.sprite.Sprite):
 
         self.hunger += 50
         self.food -= 1
+        if self.hunger >= 100:
+            self.hunger = 100
 
 
 class Food(pygame.sprite.Sprite):
@@ -84,6 +86,8 @@ class Game:
         # Game State
         self.frame = 0
 
+
+
         self.main_loop()
 
     def reset(self):
@@ -127,7 +131,15 @@ class Game:
             if keys[K_d]:
                 self.player.rect.x += 10
 
+            font = pygame.font.SysFont("comicsansms", 16)
+            text = font.render(f"Health: {self.player.health}", True, (0, 128, 0))
+            text1 = font.render(f"Hunger: {self.player.hunger}", True, (0, 128, 0))
+            text2 = font.render(f"Food: {self.player.food}", True, (0, 128, 0))
+
             self.screen.blit(self.background, self.screen.get_rect(), self.screen.get_rect())
+            self.screen.blit(text, (0, 0))
+            self.screen.blit(text1, (0, 20))
+            self.screen.blit(text2, (0, 40))
 
             self.playersprites.draw(self.screen)
             self.foodsprites.draw(self.screen)
